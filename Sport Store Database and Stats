@@ -1,0 +1,24 @@
+--Create a sport store database
+
+Create Table Sports (id integer primary key, name text, item integer);
+
+Insert into Sports values(1,"Soccer Ball",15);
+Insert into Sports values(2,"Baseball",12);
+Insert into Sports values(3,"Basketball",13);
+Insert into Sports values(4,"Football",14);
+Insert into Sports values(5,"golf ball",14);
+Insert into Sports Values(6,"Volleyball",13);
+Insert into Sports Values(7,"Softball",12);
+Insert into Sports Values(8,"Lacrosse",12);
+Insert into Sports Values(9,"Ruby ball",10);
+Insert into Sports Values(10,"Wiffle ball",14);
+
+--display the database ordered by price.
+Select * FROM Sports;
+Select * FROM Sports Where item >= 6 ORDER BY Item;
+
+--what is the avg price of items
+Select SUM(item) From Sports; 
+
+--what are the most 5 popular items
+Select Name from Sports order by item desc limit 6;
