@@ -1,0 +1,54 @@
+Create two tables of famous people and join the tables to give information about there career?
+
+Create table Movie_Star (id integer primary key,
+first_name text,
+last_name text,
+age text,
+genre integer);
+
+insert into Movie_Star (first_name, last_name, age, genre)
+values ("Jim", "Carry", "61", "comedy");
+insert into Movie_Star (first_name, last_name, age, genre)
+values ("Adam", "Sandler", "56", "comedy/rom_com");
+insert into Movie_Star (first_name, last_name, age, genre)
+values ("Keanu", "Reeves", "58.5", "action");
+insert into Movie_Star (first_name, last_name, age, genre)
+values ("Sandra", "Bullock", "58", "rom-coms");
+insert into Movie_Star (first_name, last_name, age, genre)
+values ("Angelina", "Jolie", "47", "dramas");
+insert into Movie_Star (first_name, last_name, age, genre)
+values ("Jennifer", "Lopez", "53", "rom-coms");
+
+Create table Number_of_movies (id INTEGER PRIMARY KEY,
+title TEXT);
+insert into Number_of_movies
+values (1, "56");
+insert into Number_of_movies
+values (2, "59");
+insert into Number_of_movies
+values (3, "77");
+insert into Number_of_movies
+values (4, "45");
+insert into Number_of_movies
+values (5, "48");
+insert into Number_of_movies
+values (6, "40");
+
+What type of genre for each person?
+
+select first_name, last_name, genre from Movie_Star
+join Number_of_movies
+ON Movie_Star.id = Number_of_movies.id GROUP BY genre;
+
+How old if each person?
+
+select first_name, last_name, age from Movie_Star
+join Number_of_movies
+ON Movie_Star.id = Number_of_movies.id GROUP BY age;
+
+How many movies does each person have?
+
+select first_name, last_name, title
+from Movie_Star
+join Number_of_movies
+ON Movie_Star.id = Number_of_movies.id GROUP BY title;
