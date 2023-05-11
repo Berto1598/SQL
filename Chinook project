@@ -1,0 +1,146 @@
+#In this query I've downloaded a dataset called chinook, which represents a digital media store and includes tables for artists, albums, media tracks, invoices, and customers.
+
+CREATE TABLE albums (
+    AlbumId  INTEGER        PRIMARY KEY AUTOINCREMENT
+                            NOT NULL,
+    Title    NVARCHAR (160) NOT NULL,
+    ArtistId INTEGER        NOT NULL,
+    FOREIGN KEY (
+        ArtistId
+    )
+    REFERENCES artists (ArtistId) ON DELETE NO ACTION
+                                  ON UPDATE NO ACTION
+);
+
+CREATE TABLE artists (
+    ArtistId INTEGER        PRIMARY KEY AUTOINCREMENT
+                            NOT NULL,
+    Name     NVARCHAR (120) 
+);
+
+CREATE TABLE customers (
+    CustomerId   INTEGER       PRIMARY KEY AUTOINCREMENT
+                               NOT NULL,
+    FirstName    NVARCHAR (40) NOT NULL,
+    LastName     NVARCHAR (20) NOT NULL,
+    Company      NVARCHAR (80),
+    Address      NVARCHAR (70),
+    City         NVARCHAR (40),
+    State        NVARCHAR (40),
+    Country      NVARCHAR (40),
+    PostalCode   NVARCHAR (10),
+    Phone        NVARCHAR (24),
+    Fax          NVARCHAR (24),
+    Email        NVARCHAR (60) NOT NULL,
+    SupportRepId INTEGER,
+    FOREIGN KEY (
+        SupportRepId
+    )
+    REFERENCES employees (EmployeeId) ON DELETE NO ACTION
+                                      ON UPDATE NO ACTION
+);
+
+1.I've listed all the data and the total amout of in this query.
+select * from chinook.customers
+
+select count(*) from chinook.customers
+
+2.I've listed the employees who are sales agents 
+SELECT * FROM chinook.Employees
+WHERE Title = "Sales Support Agent"
+
+3.I've listed all infromation in alphabeticall order by country and in reversed.
+
+select * from chinook.customers
+order by country
+
+select * from chinook.customers
+order by country desc 
+
+4.In this query I list the customers full names, customer ID, and country in alphabeticall order by country name
+SELECT FirstName, LastName, CustomerId, Country 
+FROM chinook.customers
+order by country
+
+5.I've list all the coustomers from the USA in order by state
+SELECT * FROM chinook.customers 
+WHERE Country = 'USA'
+order by state
+
+6.In this Query i've fouund the invoices of customers who are from Canada, USA, and France. The resulting table should show the customer's full name, Invoice ID, Date of the invoice, and billing country.
+SELECT cust.FirstName, cust.LastName, inv.InvoiceId, inv.BillingCountry, inv.InvoiceDate
+FROM chinook.invoices as inv 
+LEFT JOIN chinook.customers as cust 
+on inv.CustomerId = cust.CustomerId 
+WHERE inv.BillingCountry = "Canada";
+
+SELECT cust.FirstName, cust.LastName, inv.InvoiceId, inv.BillingCountry, inv.InvoiceDate
+FROM chinook.invoices as inv 
+LEFT JOIN chinook.customers as cust 
+on inv.CustomerId = cust.CustomerId 
+WHERE inv.BillingCountry = "USA";
+
+SELECT cust.FirstName, cust.LastName, inv.InvoiceId, inv.BillingCountry, inv.InvoiceDate
+FROM chinook.invoices as inv 
+LEFT JOIN chinook.customers as cust 
+on inv.CustomerId = cust.CustomerId 
+WHERE inv.BillingCountry = "France";
+
+7.I've list the billing of countries from the invoice table in order.
+SELECT DISTINCT BillingCountry FROM chinook.Invoices
+order by billingcountry
+
+8.The total of invoices 
+SELECT COUNT(*)
+FROM chinook.Invoices
+
+9.The total of sales in 2010
+SELECT SUM(Total)
+FROM chinook.Invoices
+WHERE InvoiceDate BETWEEN '2010-01-01' AND '2010-12-31'
+
+10.In this query i've included the purchased track name with each invoice line ID
+SELECT t.Name, i.InvoiceLineId
+FROM chinook.Invoice_items i
+JOIN chinook.Tracks t 
+ON i.TrackId = t.TrackId;
+
+11.In this query i've listed the invoice Total, Customer name, Country, and Sales Agent name for all invoices and customers
+SELECT emp.LastName, emp.Firstname, cust.FirstName, cust.LastName, cust.Country, inv.total
+FROM chinook.employees emp 
+JOIN chinook.Customers cust ON cust.SupportRepId = emp.EmployeeId
+JOIN chinook.Invoices Inv ON Inv.CustomerId = cust.CustomerId;
+
+12.In this query that shows all the Tracks, and include the Album name, Media type, and Genre
+SELECT t.Name AS 'Track Name', a.Title AS 'Album Title', m.Name AS 'Media Type', g.Name AS 'Genre'
+FROM chinook.tracks t
+JOIN chinook.Albums a 
+on a.AlbumId = t.AlbumId
+JOIN chinook.Media_Types m
+on m.MediaTypeId = t.MediaTypeId
+JOIN chinook.Genres g
+on g.GenreId = t.GenreId;
+
+13.Show the total sales made by each sales agent
+SELECT emp.FirstName, emp.LastName,
+ROUND(SUM(Inv.Total), 2) as 'Total Sales' 
+FROM chinook.Employees emp
+JOIN chinook.Customers cust 
+ON cust.SupportRepId = emp.EmployeeId
+JOIN chinook.Invoices Inv 
+ON Inv.CustomerId = cust.CustomerId
+WHERE emp.Title = 'Sales Support Agent' 
+GROUP BY emp.FirstName;
+
+14.Which sales agent made the most dollars in sales in 2009
+SELECT emp.FirstName, emp.LastName,
+ROUND(SUM(Inv.Total), 2) as 'Total Sales' 
+FROM chinook.Employees emp
+JOIN chinook.Customers cust 
+ON cust.SupportRepId = emp.EmployeeId
+JOIN chinook.Invoices Inv 
+ON Inv.CustomerId = cust.CustomerId
+WHERE emp.Title = 'Sales Support Agent' 
+AND Inv.InvoiceDate LIKE '2009%' 
+GROUP BY emp.FirstName
+ORDER BY (round(sum(Inv.Total), 2))  DESC LIMIT 1;
