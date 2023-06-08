@@ -1,4 +1,4 @@
-# In this SQL qury I had the option to choose which data I wanted to qury.
+# In this SQL query I had the option to choose which data I wanted to qury.
 # I went with the solar system objects and extracted the data.
 
 CREATE TABLE solar_system_objects(
