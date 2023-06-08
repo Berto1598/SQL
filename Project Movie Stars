@@ -1,5 +1,5 @@
-# In this quey i've created two tables of famous people and join the tables to give information about there career.
-# I downloaded the data from Kaggle
+# In this query i've created two tables of famous people and join the tables to give information about there career.
+# I downloaded the data from Khana academy.
 
 Create table Movie_Star (id integer primary key,
 first_name text,
