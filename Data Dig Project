@@ -1,3 +1,6 @@
+# In this SQL qury I had the option to choose which data I wanted to qury.
+# I went with the solar system objects and extracted the data.
+
 CREATE TABLE solar_system_objects(
   body TEXT
 , mean_radius NUMERIC         /* km */
@@ -45,7 +48,7 @@ INSERT INTO solar_system_objects(body,mean_radius,mean_radius_rel,volume,volume_
 INSERT INTO solar_system_objects(body,mean_radius,mean_radius_rel,volume,volume_rel,mass,mass_rel,density,surface_gravity,surface_gravity_rel,type_of_object,shape) VALUES ('Tethys ',531.1,0.083,0.624,0.0006,0.6173,0.000103,0.984,0.145,0.015,'satellite of Saturn','round');
 INSERT INTO solar_system_objects(body,mean_radius,mean_radius_rel,volume,volume_rel,mass,mass_rel,density,surface_gravity,surface_gravity_rel,type_of_object,shape) VALUES ('Ceres ',476.2,0.076,0.437,0.0004,0.95,0.000159,2.077,0.27,0.0275,'dwarf planet belt asteroid','round');
 
-What are average, max, and min values in the data?
+# What are average, max, and min values in the data?
 
 SELECT * FROM solar_system_objects Limit 20;
 Select AVG(mean_radius) from solar_system_objects;
@@ -63,10 +66,10 @@ select body, max(volume) from solar_system_objects;
 select body, max(mass) from solar_system_objects;
 select body, max(density) from solar_system_objects;
 
-What about those numbers per category in the data (using HAVING)?
+# What about those numbers per category in the data (using HAVING)?
 
 select body, sum(surface_gravity) as total_gravity from solar_system_objects group by body Having total_gravity >1000;
 
-What ways are there to group the data values that don’t exist yet (using CASE)?
+# What ways are there to group the data values that don’t exist yet (using CASE)?
 
 select count(*), Case When surface_gravity =1000 then 'high gravity' When surface_gravity =500 then 'Mid gravity'  When surface_gravity =50 then 'Low gravity' end as Gravity from solar_system_objects
