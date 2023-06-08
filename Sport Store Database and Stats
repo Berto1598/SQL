@@ -1,4 +1,6 @@
---Create a sport store database
+# In this project I the sport store data from Kaggle.
+
+# First I created the table and inserted the store data.
 
 Create Table Sports (id integer primary key, name text, item integer);
 
@@ -13,12 +15,14 @@ Insert into Sports Values(8,"Lacrosse",12);
 Insert into Sports Values(9,"Ruby ball",10);
 Insert into Sports Values(10,"Wiffle ball",14);
 
---display the database ordered by price.
+# Then I display the database ordered by price.
+
 Select * FROM Sports;
 Select * FROM Sports Where item >= 6 ORDER BY Item;
 
---what is the avg price of items
+# Listed the avg price of items.
+
 Select SUM(item) From Sports; 
 
---what are the most 5 popular items
+# The most 5 popular items
 Select Name from Sports order by item desc limit 6;
